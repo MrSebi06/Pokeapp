@@ -1,0 +1,13 @@
+h1{
+    font-size: calc(2vw + 2vh);
+}
+
+h3{
+    margin-bottom: 0%;
+}
+
+.pokemonList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
