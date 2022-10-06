@@ -1,0 +1,21 @@
+.listNav{
+    display: flex;
+    align-items: flex-end;
+}
+
+.listNav .navButtons{
+    display: flex;
+    justify-content: space-around;
+    min-width: 8vw;
+}
+
+.listNav button{
+    flex: 1 1 20%;
+}
+
+.listNav p{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1vw;
+    margin: 0 0.2vw;
+    color: gray;
+}

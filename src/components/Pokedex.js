@@ -7,11 +7,11 @@ function Pokedex() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [pokemons, setPokemons] = useState([]);
-    const [limit, setLimit] = useState(9);
-    const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(9*3);
+    const [offset, setOffset] = useState(1);
 
     useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + offset*limit)
+        fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + (offset-1)*limit)
         .then(res => res.json())
         .then(data => {
             setIsLoaded(true);
@@ -26,20 +26,22 @@ function Pokedex() {
 
 
     const handleChange = (event) => {
-        console.log(event.target.value);
-        // fetch('https://pokeapi.co/api/v2/pokemon/?offset=' + event.target.textContent)
-        // .then(res => res.json())
-        // // .then(data => {
-        //     setIsLoaded(true);
-        //     setPokemons(data.results);   
-        // });
-        setOffset(event.target.value);
+        const val = Number(event.target.value);
+        setOffset(val);
+        setIsLoaded(false);
+        fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + (val-1)*limit)
+        .then(res => res.json())
+        .then(data => {
+            setIsLoaded(true);
+            setPokemons(data.results);   
+        });
     };
 
     const pokemonList = pokemons
     .map((pokemon, index) => (
         <Pokemon
-            id={index+1}
+            id={((offset-1)*limit)+index+1}
+            key={index}
             name={pokemon.name}
             url={pokemon.url}
         />
@@ -48,13 +50,20 @@ function Pokedex() {
     if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
             return (
                 <div className="pokedex">
                     <h1>Pokedex</h1>
                     <div className="pokemonList">
-                        <ListNavigation offset={offset} handleChange={handleChange}/>
+                        Loading...
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="pokedex">
+                    <h1>Pokedex</h1>
+                    <ListNavigation className="listNav" offset={Number(offset)} handleChange={handleChange}/>
+                    <div className="pokemonList">
                         {pokemonList}
                     </div>
                     {/* <input type="number" min="1" value="1" onChange={handleChange}/>  */}

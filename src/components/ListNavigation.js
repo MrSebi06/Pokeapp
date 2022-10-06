@@ -1,24 +1,39 @@
-
+import { useEffect } from "react";
+import "../style/ListNav.css";
 
 function ListNavigation(props) {
-    var offset = props.offset + 1;
-    var start = offset - 2;
+    // switch (props.offset)
+    // {
+    //     case 1:
+    //         var i = 1;
+    //         break;
+    //     case 2:
+    //         var i = 1;
+    //         break;
+    //     default:
+    //         var i = props.offset-2;
+    //         const before = (<p className="before">...</p>);
+    // }
 
-    const before = Array(2)
-        .fill()
-        .map(() => (<button onClick={props.handleChange} value={start++}>{start}</button>));
+    if (props.offset === 1 || props.offset === 2)
+    {
+        var i = 1;
+    } else {
+        var i = props.offset - 2;
+        var before = (<p>...</p>);
+    }
 
-    start++;
-    
-    const after = Array(2)
-        .fill()
-        .map(() => (<button onClick={props.handleChange} value={start++}>{start}</button>));
+    const buttons = Array(5)
+    .fill()
+    .map(() => (<button key={"nav_" + i} onClick={props.handleChange} value={i} disabled={i===props.offset}>{i++}</button>));
 
     return (
         <div className="listNav">
-            {before}        
-            <button onClick={props.handleChange}>{offset}</button>
-            {after}
+            {before}
+            <div className="navButtons">
+                {buttons}
+            </div>
+            <p>...</p>
         </div>
     );
 } 

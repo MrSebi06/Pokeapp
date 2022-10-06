@@ -7,6 +7,12 @@
   font-display: swap;
 }
 
+::selection{
+  background-color: lightblue;
+  color: darkblue;
+  transition: 1s;
+}
+
 
 .Pokeapp {
   text-align: center;

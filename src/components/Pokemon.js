@@ -32,13 +32,23 @@ function Pokemon(props){
 
     const typesList = types
     .map(type => (
-        <img className="type" src={"assets/types/" + type.type.name + "_type.svg"} alt={type.type.name}/>
+        <img key={props.name + "_" + type.type.name} className="type" src={"assets/types/" + type.type.name + "_type.svg"} alt={type.type.name}/>
     ));
+
+
+    const statValues = stats.map((stat) => (stat.base_stat));
+
+    statValues.splice(5, 1);
+    statValues.splice(0, 1);
+
+    const max = Math.max(...statValues);
+
+    console.log(props.name, statValues, max);
 
     if (error) {
         return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <div className="pokemon">Loading...</div>;
     } else {
         return (
             <div className="pokemon">
@@ -64,14 +74,14 @@ function Pokemon(props){
 
                             <tr>
                                 <td>
-                                    <div className="attack">
+                                    <div className={(statValues[0] === max) ? "attack max" : "attack"}>
                                         <h4>ATK : </h4>
                                         {statList[1]}
                                     </div>
                                 </td>
 
                                 <td>
-                                    <div className="defense">
+                                    <div className={(statValues[1] === max) ? "defense max" : "defense"}>
                                         <h4>DEF : </h4>
                                         {statList[2]}
                                     </div>
@@ -80,14 +90,14 @@ function Pokemon(props){
                             
                             <tr>
                                 <td>
-                                    <div className="special-attack">
+                                    <div className={(statValues[2] === max) ? "special-attack max" : "special-attack"}>
                                         <h4>SP. A : </h4>
                                         {statList[3]}
                                     </div>
                                 </td>
 
                                 <td>
-                                    <div className="special-defense">
+                                    <div className={(statValues[3] === max) ? "special-defense max" : "special-defense"}>
                                         <h4>SP. D : </h4>
                                         {statList[4]}
                                     </div>

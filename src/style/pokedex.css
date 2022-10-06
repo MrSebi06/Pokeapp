@@ -11,3 +11,9 @@ h3{
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+.listNav{
+    position: absolute;
+    right: 2vw;
+    top: 20%;
+}
